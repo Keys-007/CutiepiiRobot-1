@@ -57,8 +57,8 @@ class LogChannelSettings(BASE):
     # log_media = Column(Boolean)
     log_report = Column(Boolean, default=True)
 
-    def __init__(self, chat_id: int, log_join: bool, log_leave: bool, log_warn: bool, log_action: bool,
-                 log_report: bool):
+    def __init__(self, chat_id: int, log_join: bool, log_leave: bool,
+                 log_warn: bool, log_action: bool, log_report: bool):
         self.chat_id = chat_id
         self.log_warn = log_warn
         self.log_joins = log_join
@@ -107,7 +107,8 @@ def get_chat_setting(chat_id: int) -> typing.Optional[LogChannelSettings]:
 
 def set_chat_setting(setting: LogChannelSettings):
     with LOGS_INSERTION_LOCK:
-        res: LogChannelSettings = SESSION.query(LogChannelSettings).get(setting.chat_id)
+        res: LogChannelSettings = SESSION.query(LogChannelSettings).get(
+            setting.chat_id)
         if res:
             res.log_warn = setting.log_warn
             res.log_action = setting.log_action
